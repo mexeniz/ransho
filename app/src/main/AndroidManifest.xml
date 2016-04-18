@@ -33,6 +33,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ChooseList"
+            android:label="@string/title_activity_choose_list"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.iran.ransho.ransho.MainActivity" />
+        </activity>
+        <activity
+            android:name=".EditList"
+            android:label="@string/title_activity_edit_list"
+            android:parentActivityName=".ChooseList"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.iran.ransho.ransho.ChooseList" />
+        </activity>
     </application>
 
 </manifest>
