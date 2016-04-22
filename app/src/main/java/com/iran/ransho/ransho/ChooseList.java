@@ -1,6 +1,8 @@
 package com.iran.ransho.ransho;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,12 +19,37 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.StringTokenizer;
 
 public class ChooseList extends AppCompatActivity {
 
     private String m_Text = "";
     ArrayList<CanteenContainer> canteens;
     ListViewAdapter arrayAdapter;
+
+    SharedPreferences sp;
+    SharedPreferences.Editor editor;
+
+    public static final String canteenNames = "canteenNames";
+
+    public void loadCanteens()
+    {
+        Set<String> names = sp.getStringSet(canteenNames, null);
+        canteens = new ArrayList<>();
+        if(names != null)
+        {
+            String[] nameArrays = names.toArray(new String[names.size()]);
+            for(int i = 0; i < nameArrays.length; i++)
+            {
+                String name = nameArrays[i];
+                int rating = sp.getInt(name, 0);
+                CanteenContainer canteen = new CanteenContainer(name, rating);
+                canteens.add(canteen);
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +58,12 @@ public class ChooseList extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        sp = getSharedPreferences("Canteens", Context.MODE_PRIVATE);
+        editor = sp.edit();
+
         ListView listView = (ListView) findViewById(R.id.listView);
-        canteens = new ArrayList();
+        loadCanteens();
+
         arrayAdapter = new ListViewAdapter(this, R.layout.listview_item_row, canteens);
         listView.setAdapter(arrayAdapter);
 
@@ -69,6 +100,12 @@ public class ChooseList extends AppCompatActivity {
                         m_Text = input.getText().toString();
                         int rate = (int)(ratingBar.getRating() * 2);
                         AddCanteen(m_Text, rate);
+
+                        Set<String> tempStr = sp.getStringSet(canteenNames, new HashSet<String>());
+                        tempStr.add(m_Text);
+                        editor.putStringSet(canteenNames, tempStr);
+                        editor.putInt(m_Text, rate);
+                        editor.commit();
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

@@ -1,6 +1,8 @@
 package com.iran.ransho.ransho;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,12 +13,59 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
+
 public class MainActivity extends AppCompatActivity {
 
     public void clickRandom(View view)
     {
         TextView textView = (TextView) findViewById(R.id.resultText);
-        textView.setText("Clicked");
+
+        if(canteens.size() == 0)
+        {
+            textView.setText("No Canteen in List");
+            return;
+        }
+
+        Random rand = new Random();
+        int randomNumber = rand.nextInt(sumAllRate);
+        int cumulative = 0;
+        for(int i = 0; i < canteens.size() ; i++)
+        {
+            cumulative += canteens.get(i).getRatingStar();
+            if(randomNumber <= cumulative)
+            {
+                textView.setText(canteens.get(i).getName());
+                return;
+            }
+        }
+    }
+
+    ArrayList<CanteenContainer> canteens;
+    int sumAllRate;
+
+    public void loadCanteens()
+    {
+        SharedPreferences sp = getSharedPreferences("Canteens", Context.MODE_PRIVATE);
+        Set<String> names = sp.getStringSet(ChooseList.canteenNames, null);
+        canteens = new ArrayList<>();
+        sumAllRate = 0;
+        if(names != null)
+        {
+            String[] nameArrays = names.toArray(new String[names.size()]);
+            for(int i = 0; i < nameArrays.length; i++)
+            {
+                String name = nameArrays[i];
+                int rating = sp.getInt(name, 0);
+                CanteenContainer canteen = new CanteenContainer(name, rating);
+                canteens.add(canteen);
+
+                sumAllRate += rating;
+            }
+        }
     }
 
     @Override
@@ -25,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        loadCanteens();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
