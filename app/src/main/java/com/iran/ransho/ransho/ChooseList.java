@@ -2,6 +2,7 @@ package com.iran.ransho.ransho;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.ViewGroup.LayoutParams;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -62,6 +63,7 @@ public class ChooseList extends AppCompatActivity {
                 layout.addView(input);
 
                 final RatingBar ratingBar = new RatingBar(ChooseList.this);
+                ratingBar.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
                 ratingBar.setNumStars(5);
                 ratingBar.setStepSize(0.5f);
                 layout.addView(ratingBar);
@@ -73,7 +75,7 @@ public class ChooseList extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         m_Text = input.getText().toString();
-                        int rate = (int)(ratingBar.getRating() * 2);
+                        int rate = (int) (ratingBar.getRating() * 2);
                         Log.i("Add Canteen", m_Text + " " + ratingBar.getRating());
                         AddCanteen(m_Text, rate);
                     }
@@ -91,9 +93,8 @@ public class ChooseList extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    public void AddCanteen(String name, int score)
-    {
-        canteenManager.addCanteen(name,score);
+    public void AddCanteen(String name, int score) {
+        canteenManager.addCanteen(name, score);
         canteens.clear();
         canteens.addAll(canteenManager.getCanteenList());
         arrayAdapter.notifyDataSetChanged();
