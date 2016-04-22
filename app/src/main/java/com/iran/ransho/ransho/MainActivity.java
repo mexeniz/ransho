@@ -9,8 +9,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
+    public void clickRandom(View view)
+    {
+        TextView textView = (TextView) findViewById(R.id.resultText);
+        textView.setText("Clicked");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/RanSho.iml" filepath="$PROJECT_DIR$/RanSho.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Ransho.iml" filepath="$PROJECT_DIR$/Ransho.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
