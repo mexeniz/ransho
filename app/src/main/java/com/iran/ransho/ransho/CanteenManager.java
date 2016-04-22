@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Created by ASUS on 22/4/2559.
  */
 public class CanteenManager {
-    SQLiteDatabase canteenDB;
+    private SQLiteDatabase canteenDB;
 
     public CanteenManager(Context context) {
         try {
@@ -22,11 +22,11 @@ public class CanteenManager {
         }
     }
 
-    public ArrayList<Canteen> getCanteenList() {
-        String sql = "";
-        ArrayList<Canteen> result = new ArrayList<Canteen>();
+    public ArrayList<CanteenContainer> getCanteenList() {
+        String query = "SELECT * FROM canteen";
+        ArrayList<CanteenContainer> result = new ArrayList<CanteenContainer>();
 
-        Cursor c = canteenDB.rawQuery("SELECT * FROM canteen", null);
+        Cursor c = canteenDB.rawQuery(query, null);
         Log.i("Cursor Count", Integer.toString(c.getCount()));
         int nameIndex = c.getColumnIndex("name");
         int ratingIndex = c.getColumnIndex("rating");
@@ -34,18 +34,23 @@ public class CanteenManager {
 
         c.moveToFirst();
         int i = 0;
-        while (c != null) {
+        while (c != null && c.getCount() > 0) {
             String name = c.getString(nameIndex);
             int rating = c.getInt(ratingIndex);
             String id = Integer.toString(c.getInt(idIndex));
             Log.i(i + " Canteen", id + " " + name + " " + rating);
 
-            result.add(new Canteen(id, name, rating));
+            result.add(new CanteenContainer(id, name, rating));
             i++;
             if (!c.moveToNext()) break;
 
         }
 
         return result;
+    }
+
+    public void addCanteen(String name, int rating) {
+        String sql = "INSERT INTO canteen (name,rating) VALUES ('" + name + "', " + rating + ")";
+        canteenDB.execSQL(sql);
     }
 }
