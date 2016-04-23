@@ -80,6 +80,18 @@ public class ListViewAdapter extends ArrayAdapter<CanteenContainer> {
 //            }
 //        });
         holder.ratingBar.setRating(1.0f * canteen.getRatingStar() / 2.0f);
+        // If player change rating bar update it to database still not work
+
+//        holder.ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+//            @Override
+//            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+//                if(fromUser)
+//                {
+//                    ChooseList.updateCanteen(canteen.getId(),canteen.getName(), (int)(rating * 2));
+//                }
+//            }
+//        });
+
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,9 +129,11 @@ public class ListViewAdapter extends ArrayAdapter<CanteenContainer> {
 
                 final RatingBar ratingBar = new RatingBar(context);
                 ratingBar.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                ratingBar.setRating(canteen.getRatingStar()/2.0f);
+                float stepSize = canteen.getRatingStar()/2.0f;
+                ratingBar.setRating(stepSize);
                 ratingBar.setNumStars(5);
                 ratingBar.setStepSize(0.5f);
+
                 layout.addView(ratingBar);
 
                 builder.setView(layout);
