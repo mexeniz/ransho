@@ -8,7 +8,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:clickable="true">
+        android:clickable="true"
+        android:id="@+id/rowLayout">
         <TextView
             android:id="@+id/txtTitle"
             android:gravity="center_vertical"
@@ -26,10 +27,12 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_create"
+            android:id="@+id/deleteButton"
+            android:src="@drawable/abc_ic_clear_mtrl_alpha"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:clickable="true" />
+            android:clickable="true"
+            android:tint="@color/abc_input_method_navigation_guard" />
     </RelativeLayout>
 
     <RatingBar

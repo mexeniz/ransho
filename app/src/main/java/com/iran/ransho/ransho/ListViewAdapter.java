@@ -3,6 +3,7 @@ package com.iran.ransho.ransho;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Movie;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,7 +13,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -50,8 +53,10 @@ public class ListViewAdapter extends ArrayAdapter<CanteenContainer> {
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new CanteenHolder();
+            holder.relativeLayout = (RelativeLayout) row.findViewById(R.id.rowLayout);
             holder.txtTitle = (TextView)row.findViewById(R.id.txtTitle);
             holder.ratingBar = (RatingBar)row.findViewById(R.id.ratingBar);
+            holder.deleteButton = (ImageView)row.findViewById(R.id.deleteButton);
 
             row.setTag(holder);
         }
@@ -62,16 +67,29 @@ public class ListViewAdapter extends ArrayAdapter<CanteenContainer> {
 
         CanteenContainer canteen = canteens.get(position);
         holder.txtTitle.setText(canteen.getName());
-        holder.txtTitle.setId(Integer.parseInt(canteen.getId()));
+        holder.relativeLayout.setId(Integer.parseInt(canteen.getId()));
+        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("Row "+v.getId(),"Clicked!");
+            }
+        });
         holder.ratingBar.setRating(canteen.getRatingStar() / 2.0f);
+        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("Delete Button","Clicked!");
+            }
+        });
 
         return row;
     }
 
     static class CanteenHolder
     {
+        RelativeLayout relativeLayout;
         TextView txtTitle;
         RatingBar ratingBar;
-        ImageButton editButton ;
+        ImageView deleteButton ;
     }
 }
