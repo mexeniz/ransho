@@ -30,9 +30,9 @@ import java.util.ArrayList;
 public class ChooseList extends AppCompatActivity {
 
     private String m_Text = "";
-    ArrayList<CanteenContainer> canteens;
-    ListViewAdapter arrayAdapter;
-    CanteenManager canteenManager;
+    protected static ArrayList<CanteenContainer> canteens;
+    protected static ListViewAdapter arrayAdapter;
+    protected static CanteenManager canteenManager;
 
     SharedPreferences sp;
     SharedPreferences.Editor editor;
@@ -130,13 +130,24 @@ public class ChooseList extends AppCompatActivity {
         }
     }
 
-    public void AddCanteen(String name, int score) {
-        canteenManager.addCanteen(name, score);
+    public static void AddCanteen(String name, int score) {
+        canteenManager.insertCanteen(name, score);
         canteens.clear();
         canteens.addAll(canteenManager.getCanteenList());
         arrayAdapter.notifyDataSetChanged();
     }
-
+    public static void updateCanteen(String id,String name, int score) {
+        canteenManager.updateCanteen(id,name, score);
+        canteens.clear();
+        canteens.addAll(canteenManager.getCanteenList());
+        arrayAdapter.notifyDataSetChanged();
+    }
+    public static void deleteCanteen(String id) {
+        canteenManager.deleteCanteen(id);
+        canteens.clear();
+        canteens.addAll(canteenManager.getCanteenList());
+        arrayAdapter.notifyDataSetChanged();
+    }
     @Override
     public void onStop (){
         super.onStop();
