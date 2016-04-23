@@ -42,7 +42,6 @@
         android:numStars="5"
         android:stepSize="0.5"
         android:id="@+id/ratingBar"
-        android:visibility="gone"
         />
     <View
         android:layout_width="match_parent"

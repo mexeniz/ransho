@@ -79,7 +79,7 @@ public class ListViewAdapter extends ArrayAdapter<CanteenContainer> {
 //                Log.i("Row "+v.getId(),"Clicked!");
 //            }
 //        });
-        holder.ratingBar.setRating(canteen.getRatingStar() / 2.0f);
+        holder.ratingBar.setRating(1.0f * canteen.getRatingStar() / 2.0f);
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,7 +117,7 @@ public class ListViewAdapter extends ArrayAdapter<CanteenContainer> {
 
                 final RatingBar ratingBar = new RatingBar(context);
                 ratingBar.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                ratingBar.setRating(canteen.getRatingStar()/2);
+                ratingBar.setRating(canteen.getRatingStar()/2.0f);
                 ratingBar.setNumStars(5);
                 ratingBar.setStepSize(0.5f);
                 layout.addView(ratingBar);

@@ -35,11 +35,11 @@ public class MainActivity extends AppCompatActivity {
 
         Random rand = new Random();
         sumAllRate = sumAllRate();
-        int randomNumber = rand.nextInt(sumAllRate);
+        int randomNumber = rand.nextInt(sumAllRate) + 1;
         int cumulative = 0;
         for(int i = 0; i < canteens.size() ; i++)
         {
-            cumulative += canteens.get(i).getRatingStar();
+            cumulative += canteens.get(i).getRatingStar() + 1;
             if(randomNumber <= cumulative)
             {
                 textView.setText(canteens.get(i).getName());
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
             {
                 CanteenContainer canteen = canteens.get(i);
                 int rating = canteen.getRatingStar();
-                result += rating;
+                result += rating + 1;
             }
         }
         Log.d("Sum All Rate" ,""+sumAllRate);
