@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.ViewGroup.LayoutParams;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -11,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -23,18 +25,21 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import java.util.ArrayList;
+
 public class ChooseList extends AppCompatActivity {
 
     private String m_Text = "";
     ArrayList<CanteenContainer> canteens;
     ListViewAdapter arrayAdapter;
+    CanteenManager canteenManager;
 
     SharedPreferences sp;
     SharedPreferences.Editor editor;
 
     public static final String canteenNames = "canteenNames";
 
-    public void loadCanteens()
+    /*public void loadCanteens()
     {
         Set<String> names = sp.getStringSet(canteenNames, null);
         canteens = new ArrayList<>();
@@ -49,7 +54,7 @@ public class ChooseList extends AppCompatActivity {
                 canteens.add(canteen);
             }
         }
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +63,10 @@ public class ChooseList extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        sp = getSharedPreferences("Canteens", Context.MODE_PRIVATE);
-        editor = sp.edit();
-
         ListView listView = (ListView) findViewById(R.id.listView);
-        loadCanteens();
-
+        canteenManager = new CanteenManager(getApplicationContext());
+        //Read data from SQLlite
+        canteens = canteenManager.getCanteenList();
         arrayAdapter = new ListViewAdapter(this, R.layout.listview_item_row, canteens);
         listView.setAdapter(arrayAdapter);
 
@@ -71,8 +74,7 @@ public class ChooseList extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(ChooseList.this);
                 builder.setTitle("New Canteen");
 
@@ -87,6 +89,7 @@ public class ChooseList extends AppCompatActivity {
                 layout.addView(input);
 
                 final RatingBar ratingBar = new RatingBar(ChooseList.this);
+                ratingBar.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
                 ratingBar.setNumStars(5);
                 ratingBar.setStepSize(0.5f);
                 layout.addView(ratingBar);
@@ -98,14 +101,15 @@ public class ChooseList extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         m_Text = input.getText().toString();
-                        int rate = (int)(ratingBar.getRating() * 2);
+                        int rate = (int) (ratingBar.getRating() * 2);
+                        Log.i("Add Canteen", m_Text + " " + ratingBar.getRating());
                         AddCanteen(m_Text, rate);
 
-                        Set<String> tempStr = sp.getStringSet(canteenNames, new HashSet<String>());
+                        /*Set<String> tempStr = sp.getStringSet(canteenNames, new HashSet<String>());
                         tempStr.add(m_Text);
                         editor.putStringSet(canteenNames, tempStr);
                         editor.putInt(m_Text, rate);
-                        editor.commit();
+                        editor.commit();*/
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -118,14 +122,26 @@ public class ChooseList extends AppCompatActivity {
                 builder.show();
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        try {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
-    public void AddCanteen(String name, int score)
-    {
-        CanteenContainer canteenContainer = new CanteenContainer(name, score);
-        canteens.add(canteenContainer);
+    public void AddCanteen(String name, int score) {
+        canteenManager.addCanteen(name, score);
+        canteens.clear();
+        canteens.addAll(canteenManager.getCanteenList());
         arrayAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onStop (){
+        super.onStop();
+        Log.i("ChooseList","Finish");
+        MainActivity.setCanteens(this.canteens);
     }
 
 }

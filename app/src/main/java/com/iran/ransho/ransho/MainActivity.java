@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,8 @@ import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
+    private CanteenManager canteenManager;
+
     public void clickRandom(View view)
     {
         TextView textView = (TextView) findViewById(R.id.resultText);
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Random rand = new Random();
+        sumAllRate = sumAllRate();
         int randomNumber = rand.nextInt(sumAllRate);
         int cumulative = 0;
         for(int i = 0; i < canteens.size() ; i++)
@@ -44,10 +48,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    ArrayList<CanteenContainer> canteens;
-    int sumAllRate;
+    private static ArrayList<CanteenContainer> canteens;
+    private int sumAllRate;
 
-    public void loadCanteens()
+    /*public void loadCanteens()
     {
         SharedPreferences sp = getSharedPreferences("Canteens", Context.MODE_PRIVATE);
         Set<String> names = sp.getStringSet(ChooseList.canteenNames, null);
@@ -66,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 sumAllRate += rating;
             }
         }
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +79,10 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        loadCanteens();
+        canteenManager = new CanteenManager(getApplicationContext());
+        canteens = canteenManager.getCanteenList();
+        sumAllRate = sumAllRate();
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -110,5 +117,24 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private int sumAllRate(){
+        int result = 0 ;
+        if(canteens != null)
+        {
+            for(int i = 0; i < canteens.size(); i++)
+            {
+                CanteenContainer canteen = canteens.get(i);
+                int rating = canteen.getRatingStar();
+                result += rating;
+            }
+        }
+        Log.d("Sum All Rate" ,""+sumAllRate);
+        return result;
+    }
+
+    public static void setCanteens(ArrayList<CanteenContainer> canteens){
+        MainActivity.canteens = canteens;
     }
 }

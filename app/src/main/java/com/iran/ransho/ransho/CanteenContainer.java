@@ -6,10 +6,17 @@ package com.iran.ransho.ransho;
 public class CanteenContainer {
     private String name;
     private int rate;
-    public CanteenContainer(String _name, int _rate)
+    private String id;
+    public CanteenContainer(String _id , String _name, int _rate)
     {
+        id = _id;
         name = _name;
         rate = _rate;
+    }
+
+    public String getId()
+    {
+        return id;
     }
 
     public String getName()
