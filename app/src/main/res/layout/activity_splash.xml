@@ -8,24 +8,28 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.iran.ransho.ransho.SplashScreen"
-    android:background="#009688">
+    android:background="#FF5722">
 
     <ImageView
         android:id="@+id/imgLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:src="@drawable/zebro_eye" />
+        android:src="@drawable/ransho_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp" />
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:textSize="24dp"
-        android:textColor="#ffffff"
+        android:textSize="48dp"
+        android:textColor="#00BCD4"
         android:gravity="center_horizontal"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentBottom="false"
         android:text="RanSho"
-        android:shadowColor="#4a4a4a" />
+        android:shadowColor="#4a4a4a"
+        android:layout_alignParentEnd="false"
+        android:layout_below="@+id/imgLogo"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold|italic" />
 
 </RelativeLayout>

@@ -4,7 +4,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ransho_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -37,8 +37,8 @@
         <activity
             android:name=".ChooseList"
             android:label="@string/title_activity_choose_list"
-            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -47,12 +47,16 @@
         <activity
             android:name=".EditList"
             android:label="@string/title_activity_edit_list"
-            android:screenOrientation="portrait"
             android:parentActivityName=".ChooseList"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.iran.ransho.ransho.ChooseList" />
+        </activity>
+        <activity android:name=".About"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.PopUp">
         </activity>
     </application>
 

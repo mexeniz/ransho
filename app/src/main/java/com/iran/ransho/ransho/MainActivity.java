@@ -1,5 +1,6 @@
 package com.iran.ransho.ransho;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +27,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void clickRandom(View view)
     {
-        TextView textView = (TextView) findViewById(R.id.resultText);
+        final TextView textView = (TextView) findViewById(R.id.resultText);
 
         if(canteens.size() == 0)
         {
-            textView.setText("No Canteen in List");
+            Toast.makeText(getApplicationContext(),"Please create canteen list.",Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -43,6 +45,29 @@ public class MainActivity extends AppCompatActivity {
             if(randomNumber <= cumulative)
             {
                 textView.setText(canteens.get(i).getName());
+                textView.setAlpha(0.0f);
+                textView.animate().scaleX(1.1f).setDuration(500).setListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        textView.animate().scaleX(1.0f).setDuration(500);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                });
+                textView.animate().alpha(1.0f).setDuration(800);
                 return;
             }
         }
@@ -113,7 +138,8 @@ public class MainActivity extends AppCompatActivity {
             Intent i = new Intent(MainActivity.this, ChooseList.class);
             startActivity(i);
         }else if(id == R.id.action_about){
-            return true;
+            Intent i = new Intent(MainActivity.this, About.class);
+            startActivity(i);
         }
 
         return super.onOptionsItemSelected(item);

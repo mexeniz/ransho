@@ -15,12 +15,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="iCanteen"
+        android:text="Let&apos;s RanSho!"
         android:id="@+id/resultText"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="120dp"
-        android:textSize="50dp" />
+        android:textSize="50dp"
+        android:textStyle="bold" />
 
     <Button
         android:layout_width="wrap_content"
@@ -31,5 +32,9 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:clickable="false"
-        android:onClick="clickRandom" />
+        android:onClick="clickRandom"
+        android:background="#00BCD4"
+        android:textSize="24dp"
+        android:padding="10dp"
+        android:textStyle="bold" />
 </RelativeLayout>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:alpha="1"
+    tools:context="com.iran.ransho.ransho.About"
+    android:background="#FF5722">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RanSho"
+            android:id="@+id/quote"
+            android:singleLine="false"
+            android:shadowColor="#6b5a5a"
+            android:textSize="36dp"
+            android:textColor="#00BCD4"
+            android:textIsSelectable="false"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/imageView"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold|italic" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButton"
+            android:src="@drawable/abc_ic_clear_mtrl_alpha"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:onClick="onCloseClicked"/>
+
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:layout_marginTop="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/ic_ransho" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:collapseColumns="2"
+            android:layout_below="@+id/quote">
+
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="right">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Created by"
+                    android:id="@+id/createdTtile"
+                    android:layout_weight="1"
+                    android:singleLine="false"
+                    android:shadowColor="#6b5a5a"
+                    android:textSize="18dp"
+                    android:textColor="#ffffff"
+                    android:layout_below="@+id/quote"
+                    android:layout_alignParentEnd="true"
+                    android:textStyle="bold|italic"
+                    android:gravity="right" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="\@lost1507"
+                    android:id="@+id/creator1"
+                    android:layout_weight="1"
+                    android:singleLine="false"
+                    android:shadowColor="#6b5a5a"
+                    android:textSize="24dp"
+                    android:textColor="#ffffff"
+                    android:layout_below="@+id/quote"
+                    android:layout_alignParentEnd="true"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="left" />
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"></FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="\@mexeniz"
+                    android:layout_weight="1"
+                    android:id="@+id/creator2"
+                    android:singleLine="false"
+                    android:shadowColor="#6b5a5a"
+                    android:textSize="24dp"
+                    android:textColor="#ffffff"
+                    android:layout_below="@+id/quote"
+                    android:layout_marginTop="5dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginLeft="10dp"
+                    android:textStyle="bold" />
+
+            </TableRow>
+
+        </TableLayout>
+</RelativeLayout>
